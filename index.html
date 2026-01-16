@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N'FORME | Future of Fitness</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #CCFF00; /* Ngjyra Lime */
+            --bg: #0A0A0A;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Header & Nav --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: -1px;
+        }
+
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .btn-join {
+            background: var(--primary);
+            color: #000;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+            box-shadow: 0 0 20px rgba(204, 255, 0, 0.2);
+        }
+
+        .btn-join:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(204, 255, 0, 0.4);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(204, 255, 0, 0.05) 0%, transparent 70%);
+            padding-top: 80px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+            display: block;
+        }
+
+        .hero p {
+            color: var(--text-dim);
+            max-width: 600px;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        /* --- Programs Section --- */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin: 100px 0 50px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 8%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 24px;
+            text-align: center;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            background: rgba(204, 255, 0, 0.02);
+        }
+
+        .card-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        /* --- Pricing Section --- */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            padding: 50px 8% 100px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .price-card {
+            background: var(--card-bg);
+            padding: 50px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .price-card.featured {
+            border: 2px solid var(--primary);
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(204, 255, 0, 0.1);
+        }
+
+        .price-card h2 {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1rem;
+            color: var(--text-dim);
+            margin-bottom: 10px;
+        }
+
+        .amount {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+        }
+
+        .amount span {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .features-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header { padding: 15px 5%; }
+            nav { display: none; }
+            .price-card.featured { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">N'FORME</div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#programet">Programet</a>
+            <a href="#cmimet">Çmimet</a>
+        </nav>
+        <a href="#" class="btn-join">Anëtarësohu</a>
+    </header>
+
+    <section class="hero">
+        <h1>BASHKOHU ME <span>ELITËN</span></h1>
+        <p>Teknologjia më e fundit e fitnesit dhe trajnerët më të mirë në rajon për të arritur formën tënde maksimale në vitin 2026.</p>
+        <a href="#programet" class="btn-join" style="padding: 18px 40px;">SHIKO PROGRAMET</a>
+    </section>
+
+    <section id="programet">
+        <h2 class="section-title">PROGRAMET TONA</h2>
+        <div class="grid-container">
+            <div class="card">
+                <span class="card-icon">🏋️‍♂️</span>
+                <h3>Bodybuilding</h3>
+                <p>Pajisjet më moderne të vitit 2026 për rritjen e masës muskulore dhe forcës absolute.</p>
+            </div>
+            <div class="card">
+                <span class="card-icon">⚡</span>
+                <h3>Crossfit</h3>
+                <p>Intensitet i lartë për forcë dhe qëndrueshmëri maksimale. Sfido limitet e tua.</p>
+            </div>
+            <div class="card">
+                <span class="card-icon">🥗</span>
+                <h3>Dietat</h3>
+                <p>Plane ushqimore të personalizuara me AI dhe ekspertët tanë të nutricionit.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="cmimet">
+        <h2 class="section-title">ZGJIDH PLANIN TËND</h2>
+        <div class="pricing-grid">
+            <div class="price-card">
+                <h2>Basic</h2>
+                <div class="amount">25€<span>/muaj</span></div>
+                <ul class="features-list">
+                    <li>Aksesi 08:00 - 16:00</li>
+                    <li>Palestër dhe dush</li>
+                    <li>Parking falas</li>
+                </ul>
+                <a href="#" class="btn-join" style="display: block; text-align: center;">ZGJIDH</a>
+            </div>
+
+            <div class="price-card featured">
+                <div style="position: absolute; top: -15px; right: 20px; background: var(--primary); color: #000; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 800;">MË I POPULLUARI</div>
+                <h2>Premium</h2>
+                <div class="amount">40€<span>/muaj</span></div>
+                <ul class="features-list">
+                    <li>Aksesi 24/7</li>
+                    <li>Trajner Personal (1 seancë)</li>
+                    <li>Sauna & Spa</li>
+                    <li>Pije proteinike falas</li>
+                </ul>
+                <a href="#" class="btn-join" style="display: block; text-align: center;">ZGJIDH</a>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
