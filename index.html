@@ -4,92 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GENTI TERM | Instalime Profesionale</title>
-    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-
     <style>
-        :root {
-            --blue: #007aff;
-            --red: #ff3b30;
-            --bg: #000000;
-            --card-bg: rgba(22, 22, 23, 0.6);
-            --text-main: #ffffff;
-            --text-dim: #86868b;
-        }
-
+        :root { --blue: #007aff; --red: #ff3b30; --bg: #000; --text: #fff; --dim: #86868b; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background-color: var(--bg); color: var(--text-main); overflow-x: hidden; scroll-behavior: smooth; }
-
-        /* Navigation */
-        nav {
-            position: fixed; top: 0; width: 100%; padding: 20px 8%;
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000; backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .nav-logo { font-weight: 800; font-size: 1.4rem; letter-spacing: -1px; }
-
-        /* Hero */
-        .hero {
-            height: 100vh; display: flex; flex-direction: column; justify-content: center;
-            align-items: center; text-align: center; background: radial-gradient(circle at center, #0a0a0b 0%, #000 100%);
-        }
-        .hero-brand { font-size: clamp(3.5rem, 15vw, 9rem); font-weight: 800; line-height: 0.85; text-transform: uppercase; }
-
-        /* Grid */
+        body { background: var(--bg); color: var(--text); overflow-x: hidden; scroll-behavior: smooth; }
+        nav { position: fixed; top: 0; width: 100%; padding: 20px 8%; display: flex; justify-content: space-between; backdrop-filter: blur(20px); z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .hero-brand { font-size: clamp(3.5rem, 15vw, 9rem); font-weight: 800; line-height: 0.85; }
         section { padding: 100px 8%; }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .card {
-            background: var(--card-bg); border-radius: 30px; padding: 25px;
-            border: 1px solid rgba(255,255,255,0.05); transition: 0.4s;
-            backdrop-filter: blur(10px);
-        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .card { background: rgba(22,22,23,0.6); border-radius: 30px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; }
         .card:hover { transform: translateY(-10px); border-color: var(--blue); }
         .card img { width: 100%; height: 280px; object-fit: cover; border-radius: 20px; margin-bottom: 20px; }
-        .card h3 { font-size: 1.4rem; margin-bottom: 8px; }
-        .card p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.5; }
-
-        /* Button */
-        .whatsapp-btn {
-            position: fixed; bottom: 30px; right: 30px; background: #25d366;
-            color: white; padding: 15px 25px; border-radius: 50px;
-            text-decoration: none; font-weight: 700; z-index: 1000; box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-        }
+        .whatsapp-btn { position: fixed; bottom: 30px; right: 30px; background: #25d366; color: white; padding: 15px 25px; border-radius: 50px; text-decoration: none; font-weight: 700; z-index: 1000; }
     </style>
 </head>
 <body>
-
-    <nav>
-        <div class="nav-logo">
-            <span style="color:var(--blue)">GENTI</span><span style="color:var(--red)">TERM</span>
-        </div>
-    </nav>
-
-    <section class="hero">
-        <div class="hero-brand" data-aos="zoom-in">
-            <span style="color:var(--blue)">GENTI</span><br><span style="color:var(--red)">TERM</span>
-        </div>
-        <p style="color:var(--text-dim); letter-spacing: 5px; text-transform: uppercase; margin-top: 20px;" data-aos="fade-up">Instalime Profesionale</p>
-    </section>
-
+    <nav><div style="font-weight:800"><span style="color:var(--blue)">GENTI</span><span style="color:var(--red)">TERM</span></div></nav>
+    <section class="hero"><div class="hero-brand" data-aos="zoom-in"><span style="color:var(--blue)">GENTI</span><br><span style="color:var(--red)">TERM</span></div></section>
     <section id="galeria">
         <h2 style="font-size: 2.5rem; margin-bottom: 40px;" data-aos="fade-right">Punimet tona.</h2>
-        <div class="grid" id="punimet-live">
-            </div>
+        <div class="grid" id="punimet-live"></div>
     </section>
-
     <a href="https://wa.me/38344000000" class="whatsapp-btn">KONTAKTO NË WHATSAPP</a>
-
     <script>
-        // Konfigurimi i marre nga screenshot-i yt
         const firebaseConfig = {
             apiKey: "AIzaSyBh_7BwfNbKbscPSW1ZN9Y_UvAntsj19Wg",
             authDomain: "herolind-6ca5f.firebaseapp.com",
@@ -98,30 +40,22 @@
             messagingSenderId: "893085364638",
             appId: "1:893085364638:web:2db59e6ec72ad7e7c1a68f"
         };
-
         firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        // Shfaqja e punimeve
-        db.collection("projekte").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+        firebase.firestore().collection("projekte").orderBy("timestamp", "desc").onSnapshot((snap) => {
             const container = document.getElementById('punimet-live');
             container.innerHTML = ''; 
-
-            snapshot.forEach((doc) => {
+            snap.forEach((doc) => {
                 const data = doc.data();
                 container.innerHTML += `
                     <div class="card" data-aos="fade-up">
                         <img src="${data.imageUrl}" alt="Punim">
                         <h3>${data.titulli}</h3>
-                        <p>${data.pershkrimi || 'Instalim i kryer me sukses.'}</p>
-                    </div>
-                `;
+                        <p style="color:var(--dim); font-size:0.9rem;">${data.pershkrimi || 'Instalim profesional.'}</p>
+                    </div>`;
             });
         });
     </script>
-
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>AOS.init({ duration: 1000, once: true });</script>
-
 </body>
 </html>
