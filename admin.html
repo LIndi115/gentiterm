@@ -3,55 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin | Genti Term</title>
+    <title>GENTI TERM | Paneli Admin</title>
+    
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
     <style>
-        body { background: #0f172a; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .box { background: #1e293b; padding: 30px; border-radius: 20px; width: 100%; max-width: 350px; border: 1px solid #334155; }
-        input, button { width: 100%; padding: 12px; margin-top: 15px; border-radius: 10px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; }
-        button { background: #007aff; border: none; font-weight: bold; cursor: pointer; }
+        :root {
+            --blue: #007aff;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #ffffff;
+        }
+
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .admin-container {
+            background: var(--card);
+            padding: 40px;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        h2 { text-align: center; color: var(--blue); margin-bottom: 25px; font-weight: 800; }
+
+        input, button {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: white;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: var(--blue);
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover { background: #005bbd; transform: scale(0.98); }
+        button:disabled { background: #334155; cursor: not-allowed; }
+
+        #status {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h2 style="color:#007aff; text-align:center;">Shto Punim</h2>
-        <input type="text" id="t" placeholder="Titulli i punimit">
-        <input type="text" id="p" placeholder="Përshkrimi (opsionale)">
-        <input type="file" id="f" accept="image/*">
-        <button id="btn" onclick="upload()">PUBLIKO TANI</button>
-        <p id="st" style="margin-top:15px; color:#94a3b8; font-size:12px; text-align:center;">Gati.</p>
-    </div>
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyBh_7BwfNbKbscPSW1ZN9Y_UvAntsj19Wg",
-            authDomain: "herolind-6ca5f.firebaseapp.com",
-            projectId: "herolind-6ca5f",
-            storageBucket: "herolind-6ca5f.firebasestorage.app",
-            messagingSenderId: "893085364638",
-            appId: "1:893085364638:web:2db59e6ec72ad7e7c1a68f"
-        };
-        firebase.initializeApp(firebaseConfig);
-        async function upload() {
-            const file = document.getElementById('f').files[0];
-            const tit = document.getElementById('t').value;
-            const per = document.getElementById('p').value;
-            const btn = document.getElementById('btn');
-            const st = document.getElementById('st');
-            if(!file || !tit) return alert("Plotëso titullin dhe zgjidh foton!");
-            btn.disabled = true; st.innerText = "Duke u ngarkuar...";
-            try {
-                const ref = firebase.storage().ref('p/' + Date.now() + file.name);
-                await ref.put(file);
-                const url = await ref.getDownloadURL();
-                await firebase.firestore().collection("projekte").add({
-                    titulli: tit, pershkrimi: per, imageUrl: url, timestamp: firebase.firestore.FieldValue.serverTimestamp()
+
+<div class="admin-container">
+    <h2>Shto Punim</h2>
+    
+    <input type="text" id="titulli" placeholder="Titulli i punimit">
+    <input type="text" id="pershkrimi" placeholder="Përshkrimi (opsionale)">
+    <input type="file" id="foto-input" accept="image/*">
+
+    <button id="upload-btn" onclick="vazhdoUpload()">PUBLIKO TANI</button>
+    
+    <p id="status">Gati për ngarkim.</p>
+</div>
+
+<script>
+    // Konfigurimi i projektit tend Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyBh_7BwfNbKbscPSW1ZN9Y_UvAntsj19Wg",
+        authDomain: "herolind-6ca5f.firebaseapp.com",
+        projectId: "herolind-6ca5f",
+        storageBucket: "herolind-6ca5f.firebasestorage.app",
+        messagingSenderId: "893085364638",
+        appId: "1:893085364638:web:2db59e6ec72ad7e7c1a68f"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // API Key i ImgBB qe e dorgove ti
+    const IMGBB_API_KEY = "eb62a6907856c805db10887e57fa34ea";
+
+    async function vazhdoUpload() {
+        const fileInput = document.getElementById('foto-input');
+        const titulliInput = document.getElementById('titulli');
+        const pershkrimiInput = document.getElementById('pershkrimi');
+        const btn = document.getElementById('upload-btn');
+        const status = document.getElementById('status');
+
+        if (!fileInput.files[0] || !titulliInput.value) {
+            alert("Ploteso titullin dhe zgjidh nje foto!");
+            return;
+        }
+
+        try {
+            btn.disabled = true;
+            status.innerHTML = "🔄 Duke ngarkuar foton në ImgBB...";
+
+            // 1. Upload ne ImgBB
+            const formData = new FormData();
+            formData.append("image", fileInput.files[0]);
+
+            const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                method: "POST",
+                body: formData
+            });
+            const result = await response.json();
+
+            if (result.success) {
+                const imageUrl = result.data.url;
+                status.innerHTML = "💾 Duke ruajtur në Firebase...";
+
+                // 2. Ruajtja ne Firestore (Databaze)
+                await db.collection("projekte").add({
+                    titulli: titulliInput.value,
+                    pershkrimi: pershkrimiInput.value,
+                    imageUrl: imageUrl,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 });
+
+                status.innerHTML = "✅ Sukses! Punimi u publikua.";
                 alert("Punimi u postua me sukses!");
                 location.reload();
-            } catch (e) { alert("Gabim! Sigurohu që Storage Rules janë 'true'."); btn.disabled = false; }
+            } else {
+                throw new Error("Gabim nga ImgBB");
+            }
+
+        } catch (error) {
+            console.error(error);
+            status.innerHTML = "❌ Gabim gjatë publikimit.";
+            alert("Gabim: " + error.message);
+            btn.disabled = false;
         }
-    </script>
+    }
+</script>
+
 </body>
 </html>
