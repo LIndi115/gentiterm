@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B-SPORTS | Arena e Fituesve 2026</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-green: #00ff41;
+            --deep-black: #050505;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--deep-black); 
+            color: white; 
+            overflow-x: hidden;
+        }
+
+        /* Ticker Live 2026 */
+        .live-ticker {
+            background: #000;
+            border-bottom: 1px solid var(--neon-green);
+            padding: 8px 0;
+            display: flex;
+            white-space: nowrap;
+        }
+        .ticker-content {
+            display: flex;
+            animation: scroll 30s linear infinite;
+        }
+        .match {
+            padding: 0 30px;
+            font-family: 'Syncopate', sans-serif;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+        .match span { color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green); }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Navigacioni Futurist */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 30px 8%;
+            background: linear-gradient(to bottom, rgba(0,0,0,1), transparent);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .logo { font-family: 'Syncopate', sans-serif; font-size: 30px; font-weight: 900; }
+        .logo span { color: var(--neon-green); }
+
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { 
+            text-decoration: none; color: #888; 
+            text-transform: uppercase; font-size: 13px; font-weight: 700;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--neon-green); }
+
+        /* Main Layout */
+        .container { padding: 40px 8%; display: grid; grid-template-columns: 3fr 1fr; gap: 30px; }
+
+        /* Featured Story */
+        .hero-story {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            height: 600px;
+            border: 1px solid var(--border);
+        }
+        .hero-story img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+        .hero-story:hover img { transform: scale(1.05) rotate(-1deg); }
+
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,1) 10%, rgba(0,0,0,0.4) 50%, transparent);
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 50px;
+        }
+        .hero-overlay h1 { font-size: 55px; font-weight: 900; line-height: 0.95; margin-bottom: 20px; text-transform: uppercase; }
+        .hero-overlay p { color: #ccc; font-size: 18px; max-width: 600px; }
+
+        /* Trending Column */
+        .trending-list { display: flex; flex-direction: column; gap: 20px; }
+        .trend-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 16px;
+            transition: 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        .trend-card:hover { 
+            background: rgba(0, 255, 65, 0.1); 
+            border-color: var(--neon-green);
+            transform: translateX(10px);
+        }
+        .trend-card .meta { color: var(--neon-green); font-size: 10px; font-weight: 800; text-transform: uppercase; margin-bottom: 8px; }
+        .trend-card h3 { font-size: 18px; line-height: 1.3; }
+
+        /* Badge LIVE */
+        .live-badge {
+            position: absolute; top: 30px; left: 30px;
+            background: #ff0000; color: white;
+            padding: 5px 15px; border-radius: 5px;
+            font-weight: 900; font-size: 12px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Footer */
+        footer { padding: 60px 8%; border-top: 1px solid var(--border); text-align: center; margin-top: 50px; }
+        .footer-logo { font-family: 'Syncopate', sans-serif; margin-bottom: 20px; font-size: 20px; }
+
+        @media (max-width: 1024px) {
+            .container { grid-template-columns: 1fr; }
+            .hero-overlay h1 { font-size: 35px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="live-ticker">
+    <div class="ticker-content">
+        <div class="match">CHAMPIONS LEAGUE: <span>M. CITY 2 - 2 REAL MADRID</span> (MIN 85')</div>
+        <div class="match">SUPERLIGA: <span>PRISHTINA 1 - 0 BALLKANI</span> (MBYLLUR)</div>
+        <div class="match">TRANSFERIME: <span>SALAH DREJT ARABISË?</span> (RAPORT)</div>
+        <div class="match">CHAMPIONS LEAGUE: <span>M. CITY 2 - 2 REAL MADRID</span> (MIN 85')</div>
+        <div class="match">SUPERLIGA: <span>PRISHTINA 1 - 0 BALLKANI</span> (MBYLLUR)</div>
+    </div>
+</div>
+
+<nav>
+    <div class="logo">B<span>SPORTS</span></div>
+    <ul class="nav-links">
+        <li><a href="#">Kryesorja</a></li>
+        <li><a href="#">Transfer Window</a></li>
+        <li><a href="#">Analizë</a></li>
+        <li><a href="#">Live TV</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <div class="hero-story">
+        <div class="live-badge">LIVE UPDATES</div>
+        <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=2000" alt="Futboll">
+        <div class="hero-overlay">
+            <h1 style="color: var(--neon-green);">MBAPPE<br>THE CHOSEN ONE</h1>
+            <p>Real Madridi zbulon detajet e kontratës: Shifrat që do të thyejnë çdo rekord historik në futboll.</p>
+        </div>
+    </div>
+
+    <div class="trending-list">
+        <h2 style="font-family: 'Syncopate'; font-size: 16px; margin-bottom: 10px;">TRENDING NOW</h2>
+        
+        <div class="trend-card">
+            <div class="meta">Analizë • 5 Minuta më parë</div>
+            <h3>Pse taktika e Guardiolës dështoi në pjesën e dytë?</h3>
+        </div>
+
+        <div class="trend-card">
+            <div class="meta">Lajm i Fundit • 12 Minuta më parë</div>
+            <h3>Ballkani blindon portën: Vjen gardiani i ri nga Bundesliga.</h3>
+        </div>
+
+        <div class="trend-card" style="border-left: 4px solid var(--neon-green);">
+            <div class="meta">Rumor • 1 orë më parë</div>
+            <h3>Messi flet për pensionimin: "Ky mund të jetë viti im i fundit".</h3>
+        </div>
+
+        <div class="trend-card">
+            <div class="meta">VIDEO • 2 orë më parë</div>
+            <h3>Top 10 golat më të bukur të javës në Superligën e Kosovës.</h3>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-logo">B<span>SPORTS</span> 2026</div>
+    <div style="gap: 20px; display: flex; justify-content: center; margin-bottom: 30px;">
+        <i class="fab fa-instagram" style="font-size: 24px; cursor: pointer;"></i>
+        <i class="fab fa-tiktok" style="font-size: 24px; cursor: pointer;"></i>
+        <i class="fab fa-youtube" style="font-size: 24px; cursor: pointer;"></i>
+    </div>
+    <p style="color: #444; font-size: 12px; letter-spacing: 2px;">POWERED BY B-SPORTS MEDIA GROUP</p>
+</footer>
+
+</body>
+</html>
